@@ -2,22 +2,22 @@ pipeline {
     agent any
       environment {
         My_Docker_URL = '352708296901.dkr.ecr.us-east-1.amazonaws.com'
-        My_IMAGE = ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
+
     }
 
     stages {
         stage('Build') {
 //         when { anyOf { branch "master" ; branch "dev"}}
+           My_IMAGE = ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
             steps {
                 echo 'Building..'
-                sh
-                ''''
+                sh ''''
                 cd basic_webserver
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${My_Docker_URL}
                 docker build ./basic_webserver
                 docker tag ${My_IMAGE} ${My_Docker_URL}/${My_IMAGE}
                 docker push ${My_Docker_URL}/${My_IMAGE}
-                ''''
+                  ''''
             }
         }
         stage('Test') {
