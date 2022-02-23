@@ -15,9 +15,10 @@ pipeline {
                 My_IMAGE=ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
                 cd basic_webserver
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${My_Docker_URL}
-                docker build ./basic_webserver
+                docker build -t ${My_IMAGE} .
                 docker tag ${My_IMAGE} ${My_Docker_URL}/${My_IMAGE}
                 docker push ${My_Docker_URL}/${My_IMAGE}
+
                    '''
             }
         }
