@@ -23,6 +23,7 @@ pipeline {
             }
         }
         stage('Test') {
+        when { changeRequest() }
             steps {
                 echo 'Testing..'
             }
