@@ -13,15 +13,15 @@ pipeline {
                 echo 'Testing..'
             }
         }
-        stage('Deploy - Dev') {
+        stage('Deploy') {
             steps {
-                echo 'Dev Deploying....'
+                echo 'Deploying....'
             }
+        }
         stage('Deploy - Prod') {
             steps {
                 echo 'Prod Deploying....'
             }
-
         }
     }
 }
