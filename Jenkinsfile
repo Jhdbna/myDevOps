@@ -7,7 +7,7 @@ pipeline {
 
     stages {
         stage('Build') {
-//         when { anyOf { branch "master" ; branch "dev"}}
+        when { anyOf { branch "master" ; branch "dev"}}
 
             steps {
                 echo 'Building..'
@@ -30,6 +30,11 @@ pipeline {
         stage('Deploy - Dev') {
             steps {
                 echo 'Dev Deploying....'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing....'
             }
         }
         stage('Deploy - Prod') {
