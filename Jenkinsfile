@@ -32,11 +32,6 @@ pipeline {
                 echo 'Dev Deploying....'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing....'
-            }
-        }
         stage('Deploy - Prod') {
             steps {
                 echo 'Prod Deploying....'
