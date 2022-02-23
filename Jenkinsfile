@@ -6,7 +6,7 @@ pipeline {
 //         when { anyOf { branch "master" ; branch "dev"}}
             steps {
                 echo 'Building..'
-                docker build .\basic_webserver
+                docker build ./basic_webserver
             }
         }
         stage('Test') {
