@@ -10,7 +10,7 @@ pipeline {
         when { anyOf { branch "master" ; branch "dev"}}
 
             steps {
-                echo 'Building..'
+                echo 'Building...'
                 sh '''
                 My_IMAGE=ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
                 cd basic_webserver
@@ -25,7 +25,7 @@ pipeline {
         stage('Test') {
         when { changeRequest() }
             steps {
-                echo 'Testing..'
+                echo 'Testing...'
                 sh '''
 
                 python3 -m pip install -r ./basic_webserver/requirements.txt
@@ -35,12 +35,12 @@ pipeline {
         }
         stage('Deploy - Dev') {
             steps {
-                echo 'Dev Deploying....'
+                echo 'Dev Deploying...'
             }
         }
         stage('Deploy - Prod') {
             steps {
-                echo 'Prod Deploying....'
+                echo 'Prod Deploying...'
             }
         }
     }
