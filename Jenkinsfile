@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh ''''
-                My_IMAGE=ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}s
+                My_IMAGE=ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
                 cd basic_webserver
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${My_Docker_URL}
                 docker build ./basic_webserver
