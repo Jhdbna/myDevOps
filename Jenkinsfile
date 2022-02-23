@@ -27,8 +27,9 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh '''
-                python3 -m pip install -r basic_webserver/requirements.txt
-                python3 -m unittest basic_webserver/tests/test_flask_web.py
+
+                python3 -m pip install -r ./basic_webserver/requirements.txt
+                python3 -m unittest ./basic_webserver/tests/test_flask_web.py
                    '''
             }
         }
