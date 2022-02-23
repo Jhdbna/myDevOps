@@ -26,7 +26,7 @@ pipeline {
         when { changeRequest() }
             steps {
                 echo 'Testing..'
-                sh 'python -m unittest basic_webserver/tests/test_flask_web.py'
+                sh 'python3 -m unittest basic_webserver/tests/test_flask_web.py'
             }
         }
         stage('Deploy - Dev') {

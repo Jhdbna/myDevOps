@@ -13,5 +13,5 @@ class TestFlaskWebServer(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # run test with "python -m unittest simple_webserver/tests/test_flask_web.py"
+    # run test with "python -m unittest basic_webserver/tests/test_flask_web.py"
     unittest.main()
