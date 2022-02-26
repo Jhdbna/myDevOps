@@ -1,7 +1,7 @@
 // Jenkins env var reference https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#working-with-your-jenkinsfile
 
 pipeline {
-    agent any
+    agent { label 'ec2-fleet' }
     environment {
         My_Docker_URL = '352708296901.dkr.ecr.us-east-1.amazonaws.com'
 
