@@ -26,26 +26,31 @@ pipeline {
             }
         }
         stage('Deploy - Dev') {
-        {when { branch "Dev" }}
+        when { branch "Dev" }
             steps {
                 echo 'Deploying....'
             }
         }
         stage('Deploy - Prod') {
-        {when { branch "Prod" }}
+        when { branch "Prod" }
             steps {
                 echo 'Deploying....'
             }
         }
-        stage('Provision') {
-            when { changeset "infra/**" }
-            input {
-                message "Do you want to proceed for infrastructure provisioning?"
-            }
+        stage('Provision - Dev') {
+         when { allOf { branch "Dev"; changeset "infra/**/*.tf" } }
+
             steps {
+
+            echo 'Provisioning....'
+            sh '''
+            cd infra/dev
+            terraform init
+            terraform plan
+            terraform apply
+               '''
                 // copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
-                echo 'Provisioning....'
-                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
+               // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
         }
 
