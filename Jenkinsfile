@@ -44,7 +44,7 @@ pipeline {
 
             echo 'Provisioning....'
             sh '''
-            cd infra/dev
+            cd infra/Dev
             terraform init
             terraform plan
             terraform apply
