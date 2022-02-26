@@ -1,47 +1,47 @@
+// Jenkins env var reference https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#working-with-your-jenkinsfile
+
 pipeline {
     agent any
-      environment {
-        My_Docker_URL = '352708296901.dkr.ecr.us-east-1.amazonaws.com'
-
-    }
 
     stages {
-        stage('Build') {
-        when { anyOf { branch "master" ; branch "dev"}}
-
+        stage('Build Simple WebServer') {
+            when { anyOf { branch "master"; branch "dev" }}
             steps {
-                echo 'Building...'
+                echo 'Building..'
                 sh '''
-                My_IMAGE=ji-b-asic-webserver:${BRANCH_NAME}.${BUILD_ID}
-                cd basic_webserver
-                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${My_Docker_URL}
-                docker build -t ${My_IMAGE} .
-                docker tag ${My_IMAGE} ${My_Docker_URL}/${My_IMAGE}
-                docker push ${My_Docker_URL}/${My_IMAGE}
-
-                   '''
+                cd simple_webserver
+                # docker build
+                '''
             }
         }
         stage('Test') {
-//         when { changeRequest() }
+            when { changeRequest() }
             steps {
-                echo 'Testing...'
-                sh '''
+                echo 'Testing..'
+                sh 'python3 -m unittest simple_webserver/tests/test_flask_web.py'
+            }
+        }
+        stage('Deploy - dev') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+        stage('Deploy - prod') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+        stage('Provision') {
+            when { changeset "infra/**" }
+            input {
+                message "Do you want to proceed for infrastructure provisioning?"
+            }
+            steps {
+                // copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
+                echo 'Provisioning....'
+                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
+            }
+        }
 
-                python3 -m pip install -r ./basic_webserver/requirements.txt
-                python3 -m unittest ./basic_webserver/tests/test_flask_web.py
-                   '''
-            }
-        }
-        stage('Deploy - Dev') {
-            steps {
-                echo 'Dev Deploying...'
-            }
-        }
-        stage('Deploy - Prod') {
-            steps {
-                echo 'Prod Deploying...'
-            }
-        }
     }
 }
