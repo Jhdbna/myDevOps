@@ -9,7 +9,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh '''
-                cd simple_webserver
+                cd basic_webserver
                 # docker build
                 '''
             }
@@ -18,28 +18,39 @@ pipeline {
             when { changeRequest() }
             steps {
                 echo 'Testing..'
-                sh 'python3 -m unittest simple_webserver/tests/test_flask_web.py'
+
+                sh '''
+                pip3 install -r basic_webserver/requirements.txt
+                python3 -m unittest basic_webserver/tests/test_flask_web.py
+                   '''
             }
         }
-        stage('Deploy - dev') {
+        stage('Deploy - Dev') {
+        when { branch "Dev" }
             steps {
                 echo 'Deploying....'
             }
         }
-        stage('Deploy - prod') {
+        stage('Deploy - Prod') {
+        when { branch "Prod" }
             steps {
                 echo 'Deploying....'
             }
         }
-        stage('Provision') {
-            when { changeset "infra/**" }
-            input {
-                message "Do you want to proceed for infrastructure provisioning?"
-            }
+        stage('Provision - Dev') {
+         when { allOf { branch "Dev"; changeset "infra/**/*.tf" } }
+
             steps {
+
+            echo 'Provisioning....'
+            sh '''
+            cd infra/dev
+            terraform init
+            terraform plan
+            terraform apply
+               '''
                 // copyArtifacts filter: 'infra/dev/terraform.tfstate', projectName: '${JOB_NAME}'
-                echo 'Provisioning....'
-                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
+               // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
         }
 
