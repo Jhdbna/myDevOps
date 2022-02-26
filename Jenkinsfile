@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             when { changeRequest() }
             steps {
-                echo 'Testing...'
+                echo 'Testing..'
 
                 sh '''
                 pip3 install -r basic_webserver/requirements.txt
@@ -25,12 +25,14 @@ pipeline {
                    '''
             }
         }
-        stage('Deploy - dev') {
+        stage('Deploy - Dev') {
+        {when { branch "Dev" }}
             steps {
                 echo 'Deploying....'
             }
         }
-        stage('Deploy - prod') {
+        stage('Deploy - Prod') {
+        {when { branch "Prod" }}
             steps {
                 echo 'Deploying....'
             }
