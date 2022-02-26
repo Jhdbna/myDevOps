@@ -2,6 +2,10 @@
 
 pipeline {
     agent any
+    environment {
+        My_Docker_URL = '352708296901.dkr.ecr.us-east-1.amazonaws.com'
+
+    }
 
     stages {
         stage('Build Simple WebServer') {
