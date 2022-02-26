@@ -19,7 +19,10 @@ pipeline {
             steps {
                 echo 'Testing...'
 
-                sh 'python3 -m unittest simple_webserver/tests/test_flask_web.py'
+                sh '''
+                pip3 install -r basic_webserver/requirements.txt
+                python3 -m unittest basic_webserver/tests/test_flask_web.py
+                   '''
             }
         }
         stage('Deploy - dev') {
