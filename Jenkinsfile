@@ -48,7 +48,7 @@ pipeline {
         stage('Provision - Dev') {
          when { allOf { branch "Dev" ; changeset "infra/**/*.tf" } }
             steps {
-            echo 'Provisioning....'
+            echo 'Provisioning...'
             sh '''
             cd infra/Dev
             terraform init
