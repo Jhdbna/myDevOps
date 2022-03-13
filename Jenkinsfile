@@ -60,7 +60,7 @@ pipeline {
                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
         }
-        stage('Publish fantastic_ascii') {
+        stage('Publish - fantastic_ascii') {
 
             steps {
         sh '''
