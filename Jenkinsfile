@@ -22,7 +22,7 @@ pipeline {
                    '''
             }
         }
-        stage('Test') {
+        /* stage('Test') {
             when { changeRequest() }
             steps {
                 echo 'Testing..'
@@ -32,7 +32,7 @@ pipeline {
                 python3 -m unittest basic_webserver/tests/test_flask_web.py
                    '''
             }
-        }
+        } */
         stage('Deploy - Dev') {
         when { branch "Dev" }
             steps {
@@ -45,6 +45,7 @@ pipeline {
                 echo 'Deploying....'
             }
         }
+
         stage('Provision - Dev') {
          when { allOf { branch "Dev" ; changeset "infra/**/*.tf" } }
             steps {
@@ -59,6 +60,19 @@ pipeline {
                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
         }
+        stage('Publish - fantastic_ascii') {
+         when {  changeset "package_demo/setup.py" }
+            steps {
+        sh '''
+        cd  package_demo
+        pip3 install wheel twine
+        python3 setup.py sdist bdist_wheel
+        aws codeartifact login --tool twine --repository JiB-Artifactory --domain jib-artifactory --domain-owner 352708296901 --region us-east-1
+        python3 -m twine upload dist/* --repository codeartifact
 
+        '''
+            }
+        }
     }
+
 }
