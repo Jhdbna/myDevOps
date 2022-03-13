@@ -61,7 +61,7 @@ pipeline {
             }
         }
         stage('Publish - fantastic_ascii') {
-
+         when {  changeset "package_demo/setup.py" } }
             steps {
         sh '''
         cd  package_demo
