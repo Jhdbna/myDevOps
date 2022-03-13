@@ -45,6 +45,7 @@ pipeline {
                 echo 'Deploying....'
             }
         }
+
         stage('Provision - Dev') {
          when { allOf { branch "Dev" ; changeset "infra/**/*.tf" } }
             steps {
@@ -59,6 +60,19 @@ pipeline {
                // archiveArtifacts artifacts: 'infra/dev/terraform.tfstate', onlyIfSuccessful: true
             }
         }
+        stage('Publish fantastic_ascii') {
 
+            steps {
+        sh '''
+        cd  package_demo
+        python3 setup.py sdist bdist_wheel
+        pip3 install twine
+        aws codeartifact login --tool twine --repository JiB-Artifactory --domain jib-artifactory --domain-owner 352708296901 --region us-east-1
+        python3 -m twine upload dist/* --repository codeartifact
+
+        '''
+            }
+        }
     }
+
 }
