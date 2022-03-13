@@ -22,7 +22,7 @@ pipeline {
                    '''
             }
         }
-        stage('Test') {
+        /* stage('Test') {
             when { changeRequest() }
             steps {
                 echo 'Testing..'
@@ -32,7 +32,7 @@ pipeline {
                 python3 -m unittest basic_webserver/tests/test_flask_web.py
                    '''
             }
-        }
+        } */
         stage('Deploy - Dev') {
         when { branch "Dev" }
             steps {
