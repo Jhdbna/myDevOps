@@ -61,7 +61,8 @@ pipeline {
             }
         }
         stage('Publish - fantastic_ascii') {
-         when {  changeset "package_demo/setup.py" }
+         /* when {  changeset "package_demo/setup.py" }
+         Must Be Fixed : Publish only when setup.py file changes */
             steps {
         sh '''
         cd  package_demo
