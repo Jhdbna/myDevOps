@@ -65,8 +65,8 @@ pipeline {
             steps {
         sh '''
         cd  package_demo
+        pip3 install wheel twine
         python3 setup.py sdist bdist_wheel
-        pip3 install twine
         aws codeartifact login --tool twine --repository JiB-Artifactory --domain jib-artifactory --domain-owner 352708296901 --region us-east-1
         python3 -m twine upload dist/* --repository codeartifact
 
