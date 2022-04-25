@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!!! " + os.environ['HOSTNAME'] + "</p>"
+    return "<p>Hello, World! " + os.environ['HOSTNAME'] + "</p>"
 
 
 @app.route("/<name>")
