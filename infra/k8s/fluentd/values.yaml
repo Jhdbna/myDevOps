@@ -6,7 +6,7 @@ fileConfigs:
         log_group_name k8s-lg
         log_stream_name log-stream-name
         auto_create_stream true
-        region eu-west-2
+        region eu-central-1
       </match>
     </label>
 

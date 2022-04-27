@@ -19,7 +19,7 @@ spec:
         - anthonycornell.com
       secretName: tls-secret
   rules:
-    - host: a459f6de88f8c46e9964911b5ea6face-57bb0d12e276fde8.elb.eu-west-1.amazonaws.com
+    - host: a517d3f9a507e4e64a8752c0f336958b-76abc6f18b5caf04.elb.eu-central-1.amazonaws.com
       http:
         paths:
           - path: /simple-webserver
